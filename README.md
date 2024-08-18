@@ -1,1 +1,2 @@
-# Leonsi
+# Leonsi 
+Leonsi is a tool that aids the content creators in creating and management of their content, planning their content in advance and provides tools to help with their journey to be a content creator. 

@@ -1,2 +1,2 @@
 # Leonsi 
-Leonsi is a tool that aids the content creators in creating and management of their content, planning their content in advance and provides tools to help with their journey to be a content creator. 
+Leonsi is a helper bot that provides a helping hand with artists to create the perfect character with a storyline for their comicbooks or books. Aiding the artists to be focused purely on how to pave their way through the book rather than worrying about the nuisances of character creation. 

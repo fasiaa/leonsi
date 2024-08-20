@@ -1,19 +1,14 @@
 from flask import Flask, render_template, redirect, url_for, request, jsonify, session
-from assistant import authentication
-from assistant.generator import chat_response, reset_chat
-from assistant.general_chatbot import response , reset
+from service import authentication
+from service.Leonsi import chat_response, reset_chat
+from google.cloud import firestore
 import markdown
 
 app = Flask(__name__)
 app.secret_key = "64472475857858757857832109767876"
 count = 0
-
-basic_questions_and_responses = {
-    'thank': 'I am glad I was able to help. Good luck with your project. Necroder at your service 24/7.',
-    'hello': "Hello, I am Necroder, I am a super helpful coding assistant. No bug goes from my sight uncaught. How may I help you today?",
-    'bye': 'Happy coding. Do not let a bug get you down :)',
-    'how are you': 'I am fabulous as ever. How may I help you?',
-}
+db = firestore.Client()
+doc_ref = None
 
 @app.route("/")
 
@@ -28,19 +23,22 @@ def chat_page():
 @app.route('/ask-get', methods=['GET', 'POST'])
 def get_chat_response():
     if request.method == 'POST':
-        prompt = request.form["msg"]   # implement the logic for chat response and return 
+        prompt = request.form["msg"]
 
         global count
         if (count == 20):
             reset_chat_history()
 
         try:
-            for question, answer in basic_questions_and_responses.items():
-                if question in prompt.lower():
-                    return answer
-
             response = chat_response(prompt)
             count += 1
+
+            data = {
+                'user'+count: prompt,
+                'model'+count: response,
+            }
+
+            doc_ref.set(data)
             return format_markdown(response)
         
         except Exception as e:
@@ -48,7 +46,7 @@ def get_chat_response():
             return "Error generating answer" 
              
     # if the request method is get then return the normal thing
-    return "Hello, I am Leonsi, "
+    return "Hello, I am Leonsi, an assistant to help you with your storyline generation"
 #------------------------------------------------MainChatbotends-----------------------------------------------------------
 
 
@@ -86,6 +84,9 @@ def login_page():
         try: 
             user = authentication.log_in(email, password)
             session['user'] = email 
+            global doc_ref
+            doc_ref = db.collection('users').document(authentication.get_user_details())
+
             return redirect('/ask')
         except Exception as e:
             print(e) 

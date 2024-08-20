@@ -6,13 +6,12 @@ import requests
 
 dotenv.load_dotenv()
 
- url = "https://api.limewire.com/api/image/generation"
+url = "https://api.limewire.com/api/image/generation"
 
 '''----------------------------------------bot history------------------------------------------------------'''
 
 chat_history = [
-        {"role": "user", "parts": "Hello,Your name is Leonsi and your role is to assit with developing characters and helping the user write the stories for those character. You will guide the user through creating detailed character profiles , developing backstories and intergating these characters into narratives.Provide detailed character description"},
-
+        {"role": "user", "parts": "Hello,Your name is Leonsi and you are a talented and brilliant storywriter who can develop in depth stories based on any piece of information. your role is to assist with developing characters based on a given description and helping the user write the stories for those character. You will create detailed character profiles, developing backstories and intergating these characters into narratives.Provide clear instruction, examples and feedback as needed. Also do not use bullet point under any heading and make the description as humanly as possible. And where the information is not specified try to fill it in with any random description that matches the rest of the description provided."},
         {"role": "model", "parts": "Greetings! My name is Leonsi I am here to help you create a detailed characters and develop captivating stories."},
 
     ]
@@ -74,7 +73,7 @@ def character_development():
         if user_input:
             character_info[attribute] = user_input
         else:
-            character_info[attribute] = "You can decide that on your own"
+            character_info[attribute] = "[insert any description of choice]"
             
 
     # for attribute, value in character_info.items():
@@ -108,9 +107,9 @@ def visualize():
         for attribute,description in char.items():
             return_string += attribute+ " is " +description
 
-         payload = {
-            "prompt": f"i want to create a character with these {return_string} attributes.",
-            "aspect_ratio": "1:1"
+        payload = {
+        "prompt": f"i want to create a character with these {return_string} attributes.",
+        "aspect_ratio": "1:1"
         }
 
         headers = {
@@ -132,22 +131,19 @@ def visualize():
 def Character_story_development():
     #if the user want to generate random story or own description for story 
     char = character_development()
-        if char: 
-            Questions =[
-                "what is the genre of your story?" , "Provide a brief description about the story of your character?"
-            ]
-
-            story_details = {}
-
-            for start in Questions:
-                user_input = input({Questions}).strip
-
-                if user_input:
-                    story_details[start] = user_input
-                else:
-                    story_details[start] = "Generate a story according to character attributes and details"
-        else:
-            print("Lets build the character first")
+    if char: 
+        Questions =[
+            "what is the genre of your story?" , "Provide a brief description about the story of your character?"
+        ]
+        story_details = {}
+        for start in Questions:
+            user_input = input({Questions}).strip
+            if user_input:
+                story_details[start] = user_input
+            else:
+                story_details[start] = "Generate a story according to character attributes and details"
+    else:
+        print("Lets build the character first")
 
 
 
@@ -164,8 +160,7 @@ def reset_chat():
     global chat_history 
     
     chat_history = [
-            {"role": "user", "parts": "Hello,Your name is Leonsi and your role is to assit with developing characters and helping the user write the stories for those character. You will guide the user through creating detailed character profiles , developing backstories and intergating these characters into narratives.Provide clear instruction, examples and feedback as needed. "},
-
+            {"role": "user", "parts": "Hello,Your name is Leonsi and you are a talented and brilliant storywriter who can develop in depth stories based on any piece of information. your role is to assist with developing characters based on a given description and helping the user write the stories for those character. You will create detailed character profiles, developing backstories and intergating these characters into narratives. Provide clear instruction, examples and feedback as needed. Also do not use bullet point under any heading and make the description as humanly as possible. And where the information is not specified try to fill it in with any random description that matches the rest of the description provided."},
             {"role": "model", "parts": "Greetings! I am here to help you create a detailed characters and develop captivating stories."},
         ]
 

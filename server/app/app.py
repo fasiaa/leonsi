@@ -157,7 +157,7 @@ def forgot_password():
             authentication.reset_password(email)
             return jsonify({'response':"Password Reset Email Sent"})
         except:
-            return jsonify({'response':"Failed to Reset Password"})
+            return jsonify({'response':"Failed to Reset Password"}), 400
         
 @app.route('/api/reset-chat')
 def reset_chat_history():

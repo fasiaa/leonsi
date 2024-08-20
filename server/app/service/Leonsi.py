@@ -18,15 +18,15 @@ chat_history = [
 # the options that we need to provide at the frontend
 # print("Greetings! I am here to help you create detailed characters and develop captivating stories.",
 #        "I can assist you with the following tasks:",
-#        "1. CreateCharacter: Help you create a detailed character profile.",
-#        "2. DevelopBackstory: Guide you in crafting a compelling backstory for your character.",
-#        "3. CharacterMotivation: Define your character's motivations and internal conflicts.",
+#        "1. CreateCharacter: Help you create a detailed character profile.", this
+#        "2. DevelopBackstory: Guide you in crafting a compelling backstory for your character.", this
+#        "3. CharacterMotivation: Define your character's motivations and internal conflicts.", 
 #        "4. StoryIntegration: Offer ideas on how to integrate the character into your story.",
 #        "5. CharacterDialogue: Assist with writing authentic dialogue for your character.",
 #        "6. CharacterDevelopment: Plan character arcs and growth throughout the story.",
 #        "7. WritingPrompts: Provide writing prompts to spark creativity.",
 #        "8. StoryFeedback: Give constructive feedback on your story drafts.",
-#        "9. VisualizeCharacter: Help you visualize your character based on descriptions.", sep="\n")
+#        "9. VisualizeCharacter: Help you visualize your character based on descriptions.", sep="\n") this
 
 '''----------------------------------------------connecting to Gemini---------------------------------------'''
 '''---------------------------------------------------------------------------------------------------------'''
@@ -60,7 +60,7 @@ def chat_response(prompt):
 def character_development():
     # List of required attributes
     required_attributes = [
-        "name","gender", "age", "height", "eye color", "hair color", "skin tone", "personality traits", "goals", "strengths", "weaknesses"
+        "name","gender", "age", "facial features", "height", "eye color", "hair length", "hair style", "hair color", "skin tone", "personality traits", "goals", "strengths", "weaknesses"
     ]
     
     # Collect user input for each attribute
@@ -90,7 +90,7 @@ def generate_character_description(char):
     # char = character_development()
     for attribute,description in char.items():
         return_string += attribute+ " is " +description + " "
-    prompt = f"i want to create a character description with these {return_string} attributes. Give detailed character profile with every attribute possible for any character with a brief description about that character. If any attribute is missing complete that attribute according to the nature of the character also combine the personality traits, weakness,strength,and  other attributes in one paragraph except for profile description "
+    prompt = f"i want to create a character description with these {return_string} attributes. Give detailed character profile with every attribute possible for any character with a brief description about that character. If any attribute is missing complete that attribute according to the nature of the character also combine the personality traits, weakness,strength,and  other attributes in one paragraph except for profile description. DO NOT USE BULLTET POINTS "
 
     
     return chat_response(prompt)
@@ -100,6 +100,7 @@ def generate_character_description(char):
 # to be handled at the backend 
 def visualize(char):
     #char is the list of attributes received from the frontend
+
     # finalised_character = input("is this your finalised character?yes/no")
     # if finalised_character =="no":
     #     print("lets complete your character first")
@@ -107,9 +108,9 @@ def visualize(char):
     return_string = ""
     # char = character_development()
     for attribute,description in char.items():
-        return_string += attribute+ " is " +description
+        return_string += attribute+ " is " +description + " "
     payload = {
-    "prompt": f"i want to create a 2D anime character with these {return_string} attributes and personality. Make the character so that it accurately matches the description provided. And decide the clothing according to the personality",
+    "prompt": f"i want to create a 2D anime character with these {return_string} attributes and personality. Make the character so that it accurately matches the description provided. And decide the clothing according to the personality. CREATE ONLY ONE PROFILE PICTURE OF THE CHARACTER NOT THE SAME CHARACTER FROM MULTIPLE ANGLES AND DIFFERENT LOOKS",
     "aspect_ratio": "1:1"
     }
     headers = {

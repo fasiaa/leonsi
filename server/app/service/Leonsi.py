@@ -13,20 +13,20 @@ url = "https://api.limewire.com/api/image/generation"
 chat_history = [
         {"role": "user", "parts": "Hello,Your name is Leonsi and you are a talented and brilliant storywriter who can develop in depth stories based on any piece of information. your role is to assist with developing characters based on a given description and helping the user write the stories for those character. You will create detailed character profiles, developing backstories and intergating these characters into narratives.Provide clear instruction, examples and feedback as needed. Also do not use bullet point under any heading and make the description as humanly as possible. And where the information is not specified try to fill it in with any random description that matches the rest of the description provided."},
         {"role": "model", "parts": "Greetings! My name is Leonsi I am here to help you create a detailed characters and develop captivating stories."},
-
     ]
 
-print("Greetings! I am here to help you create detailed characters and develop captivating stories.",
-       "I can assist you with the following tasks:",
-       "1. CreateCharacter: Help you create a detailed character profile.",
-       "2. DevelopBackstory: Guide you in crafting a compelling backstory for your character.",
-       "3. CharacterMotivation: Define your character's motivations and internal conflicts.",
-       "4. StoryIntegration: Offer ideas on how to integrate the character into your story.",
-       "5. CharacterDialogue: Assist with writing authentic dialogue for your character.",
-       "6. CharacterDevelopment: Plan character arcs and growth throughout the story.",
-       "7. WritingPrompts: Provide writing prompts to spark creativity.",
-       "8. StoryFeedback: Give constructive feedback on your story drafts.",
-       "9. VisualizeCharacter: Help you visualize your character based on descriptions.", sep="\n")
+# the options that we need to provide at the frontend
+# print("Greetings! I am here to help you create detailed characters and develop captivating stories.",
+#        "I can assist you with the following tasks:",
+#        "1. CreateCharacter: Help you create a detailed character profile.",
+#        "2. DevelopBackstory: Guide you in crafting a compelling backstory for your character.",
+#        "3. CharacterMotivation: Define your character's motivations and internal conflicts.",
+#        "4. StoryIntegration: Offer ideas on how to integrate the character into your story.",
+#        "5. CharacterDialogue: Assist with writing authentic dialogue for your character.",
+#        "6. CharacterDevelopment: Plan character arcs and growth throughout the story.",
+#        "7. WritingPrompts: Provide writing prompts to spark creativity.",
+#        "8. StoryFeedback: Give constructive feedback on your story drafts.",
+#        "9. VisualizeCharacter: Help you visualize your character based on descriptions.", sep="\n")
 
 '''----------------------------------------------connecting to Gemini---------------------------------------'''
 '''---------------------------------------------------------------------------------------------------------'''
@@ -41,9 +41,7 @@ def get_api_key():
 def chat_response(prompt):
     gemini= get_api_key()
 
-
     model = genai.GenerativeModel(model_name='gemini-1.5-flash')
-
 
     chat = model.start_chat(
         history=chat_history
@@ -58,6 +56,7 @@ def chat_response(prompt):
 '''---------------------------------------------Character development---------------------------------------'''
 '''---------------------------------------------------------------------------------------------------------'''
 
+# to be handled at frontend
 def character_development():
     # List of required attributes
     required_attributes = [
@@ -73,7 +72,7 @@ def character_development():
         if user_input:
             character_info[attribute] = user_input
         else:
-            character_info[attribute] = "[insert any description of choice]"
+            character_info[attribute] = "[missing]"
             
 
     # for attribute, value in character_info.items():
@@ -83,51 +82,51 @@ def character_development():
 
 '''--------------------------------------------formatter-----------------------------------------------'''
 '''--------------------------------------------------------------------------------------------------------'''
-def format():
+# to be handled from backend
+def generate_character_description(char):
+    # char is the dictionary of attributes passed from the frontend
+
     return_string = ""
-    char = character_development()
+    # char = character_development()
     for attribute,description in char.items():
-        return_string += attribute+ " is " +description
+        return_string += attribute+ " is " +description + " "
     prompt = f"i want to create a character description with these {return_string} attributes. Give detailed character profile with every attribute possible for any character with a brief description about that character. If any attribute is missing complete that attribute according to the nature of the character also combine the personality traits, weakness,strength,and  other attributes in one paragraph except for profile description "
 
     
     return chat_response(prompt)
 
-
 '''---------------------------------------characterVisualisation------------------------------------------'''
 '''-------------------------------------------------------------------------------------------------------'''
-def visualize():
+# to be handled at the backend 
+def visualize(char):
+    #char is the list of attributes received from the frontend
+    # finalised_character = input("is this your finalised character?yes/no")
+    # if finalised_character =="no":
+    #     print("lets complete your character first")
 
-    finalised_character = input("is this your finalised character?yes/no")
-    if finalised_character =="no":
-        print("lets complete your character first")
-
-        return_string = ""
-        char = character_development()
-        for attribute,description in char.items():
-            return_string += attribute+ " is " +description
-
-        payload = {
-        "prompt": f"i want to create a character with these {return_string} attributes.",
-        "aspect_ratio": "1:1"
-        }
-
-        headers = {
-            "Content-Type": "application/json",
-            "X-Api-Version": "v1",
-            "Accept": "application/json",
-            "Authorization": os.getenv("LIMEWIRE_API")
+    return_string = ""
+    # char = character_development()
+    for attribute,description in char.items():
+        return_string += attribute+ " is " +description
+    payload = {
+    "prompt": f"i want to create a 2D anime character with these {return_string} attributes and personality. Make the character so that it accurately matches the description provided. And decide the clothing according to the personality",
+    "aspect_ratio": "1:1"
+    }
+    headers = {
+        "Content-Type": "application/json",
+        "X-Api-Version": "v1",
+        "Accept": "application/json",
+        "Authorization": os.getenv("LIMEWIRE_API")
     }
 
     response = requests.post(url, json=payload, headers=headers)
-    print(response)
-
     data = response.json()
-    print(data)
-
+    
+    return data
 
 '''------------------------------------------------StorylineForCharacter-------------------------------------'''
 
+# to be handled at the frontend
 def Character_story_development():
     #if the user want to generate random story or own description for story 
     char = character_development()
@@ -145,15 +144,6 @@ def Character_story_development():
     else:
         print("Lets build the character first")
 
-
-
-
-
-
-
-    
-
-
 '''-----------------------------------------------ChatBackup------------------------------------------------'''
 
 def reset_chat():
@@ -168,5 +158,4 @@ def reset_chat():
 # response = chat_response(prompt)
 # print(response)
 
-print(format())
-
+# print(format())

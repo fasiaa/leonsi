@@ -14,7 +14,7 @@ db = firestore.Client()
 
 @app.route('/')
 def home_page():
-    return "this is an api for accessing the leonsi bot"
+    return render_template("index.html")
 
 #------------------------------------------------MainChatbot-----------------------------------------------------------
 @app.route('/api/get')

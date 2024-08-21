@@ -4,15 +4,17 @@ from service.Leonsi import chat_response, reset_chat, generate_character_descrip
 from google.cloud import firestore
 import markdown
 
+#----------------------------------------------Flask config-------------------------------------------------------------
 app = Flask(__name__)
 app.secret_key = "64472475857858757857832109767876"
 count = 0
 db = firestore.Client()
-doc_ref = None
+# doc_ref = ""
+#----------------------------------------------Flask config ends-------------------------------------------------------------
 
 @app.route('/')
 def home_page():
-    return "this is an api for accessing the leonsi bot"
+    return render_template("index.html")
 
 #------------------------------------------------MainChatbot-----------------------------------------------------------
 @app.route('/api/get')
@@ -43,7 +45,7 @@ def get_chat_response():
                 'model'+str(count): response,
             }
 
-            doc_ref.set(data)
+            # doc_ref.set(data)
 
             return jsonify({'response': response}), 200
 
@@ -127,8 +129,8 @@ def login_page():
         try: 
             user = authentication.log_in(email, password)
             session['user'] = email 
-            global doc_ref
-            doc_ref = db.collection('users').document(authentication.get_user_details())
+            # global doc_ref
+            # doc_ref = db.collection('users').document(authentication.get_user_details())
             return jsonify({'response': 'Login successful'}), 200
 
         except Exception as e:
@@ -170,7 +172,3 @@ def format_markdown(markdown_text):
     # Convert Markdown to HTML
     html = markdown.markdown(markdown_text, extensions=['fenced_code'])
     return html
-
-# only added for testing
-if __name__ == "__main__":
-    app.run(debug=True)

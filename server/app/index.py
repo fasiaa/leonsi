@@ -172,7 +172,3 @@ def format_markdown(markdown_text):
     # Convert Markdown to HTML
     html = markdown.markdown(markdown_text, extensions=['fenced_code'])
     return html
-
-# only added for testing
-# if __name__ == "__main__":
-#     app.run(debug=True)

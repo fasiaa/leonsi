@@ -18,13 +18,13 @@ function NavbarHorizontal() {
           letterSpacing="5px"
           marginRight={2}
         >
-          LEONSI
+          <a href="/">LEONSI</a>
         </Typography>
         <Typography variant="krub" fontStyle="italic">
           ai-powered storytelling
         </Typography>
       </Box>
-      <Box width="25%" display="flex" justifyContent="space-between">
+      <Box width="23%" display="flex" justifyContent="space-between">
         <Typography variant="krub">
           <a href="/dashboard">dashboard</a>
         </Typography>

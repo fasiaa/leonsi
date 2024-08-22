@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useChat } from "ai/react";
+import NavbarHorizontal from "../../../components/NavbarHorizontal";
 
 export default function Chatbot() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
@@ -34,9 +35,10 @@ export default function Chatbot() {
   }, [messages]);
 
   return (
-    <Box padding={3}>
+    <Box>
+      <NavbarHorizontal></NavbarHorizontal>
       <Box
-        mt={2}
+        mt={6}
         mb={3}
         sx={{
           maxWidth: "700px",

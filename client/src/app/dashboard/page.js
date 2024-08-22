@@ -1,5 +1,11 @@
 "use client";
+import { Box } from "@mui/material";
+import NavbarHorizontal from "../../../components/NavbarHorizontal";
 
 export default function Dashboard() {
-  return <h1>This is the Dashboard</h1>;
+  return (
+    <Box>
+      <NavbarHorizontal></NavbarHorizontal>
+    </Box>
+  );
 }

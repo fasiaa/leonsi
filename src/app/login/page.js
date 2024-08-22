@@ -1,14 +1,45 @@
 "use client";
 import { Box, TextField, Typography, Stack, Button } from "@mui/material";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    logInUser(email, password);
   };
+
+  async function logInUser(enteredEmail, enteredPassword){
+    const endpointURL = "https://flask-api-for-leonsi.vercel.app/api/login";
+
+    const response = fetch(endpointURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: enteredEmail,
+        password: enteredPassword,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log(data);
+      router.push("/dashboard")
+    } else {
+      return (
+        <>
+          <Typography variant="h1" color="error">Incorrect Email or Password</Typography>
+        </>
+      )
+    }
+  }
 
   return (
     <Box height="100%">
@@ -44,7 +75,8 @@ export default function Login() {
             onChange={(e) => setEmail(e.target.value)}
           ></TextField>
           <TextField
-            size="small"
+            size="small"          
+            type="password"  
             sx={{
               backgroundColor: "rgba(55, 57, 105, 0.5)",
               borderRadius: "20px",
@@ -65,7 +97,7 @@ export default function Login() {
             backgroundColor: "#116C93",
             width: "70%",
           }}
-          onSubmit={handleSubmit}
+          onClick={handleSubmit}
         >
           Login
         </Button>

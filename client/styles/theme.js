@@ -1,7 +1,12 @@
 import { createTheme } from "@mui/material/styles";
-import { Krub } from "next/font/google";
+import { Krona_One, Krub } from "next/font/google";
 
 const krub = Krub({
+  subsets: ["latin"],
+  weight: "400",
+});
+
+const krona_one = Krona_One({
   subsets: ["latin"],
   weight: "400",
 });
@@ -12,6 +17,10 @@ const theme = createTheme({
       fontFamily: krub.style.fontFamily,
       fontWeight: 400,
       fontSize: "0.85rem",
+    },
+    title: {
+      fontFamily: krona_one.style.fontFamily,
+      fontWeight: 400,
     },
   },
 });

@@ -1,3 +1,10 @@
+import { Box } from "@mui/material";
+import NavbarHorizontal from "../../components/NavbarHorizontal";
+
 export default function Home() {
-  return <h1>This is the landing page</h1>;
+  return (
+    <Box width="100%">
+      <NavbarHorizontal></NavbarHorizontal>
+    </Box>
+  );
 }

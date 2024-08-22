@@ -1,3 +1,4 @@
+"use client";
 import { Box } from "@mui/material";
 import NavbarHorizontal from "../../components/NavbarHorizontal";
 

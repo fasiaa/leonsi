@@ -1,4 +1,5 @@
 "use client";
+<<<<<<< HEAD
 import { Box, TextField, Typography, Stack, Button } from "@mui/material";
 import { useState } from "react";
 
@@ -72,4 +73,9 @@ export default function Login() {
       </Box>
     </Box>
   );
+=======
+
+export default function Login() {
+  return <h1>This is the login page</h1>;
+>>>>>>> f8a65576513ba26aaa5a13f365a2e29e4d9e48e7
 }

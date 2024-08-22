@@ -29,7 +29,7 @@ function NavbarHorizontal() {
           <a href="/dashboard">dashboard</a>
         </Typography>
         <Typography variant="krub">
-          <a href="/chatbot">story generation</a>
+          <a href="/signup">sign up</a>
         </Typography>
         <Typography variant="krub">
           <a href="/login">login</a>

@@ -65,7 +65,18 @@ export default function Login() {
       }
     })
     .catch(error => {
-      console.error('Error:', error);
+      if (error.response) {
+        // The server responded with a status other than 2xx
+        console.error('Error response:', error.response.data);
+        console.error('Status:', error.response.status);
+        console.error('Headers:', error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('Error request:', error.request);
+      } else {
+        // Something else happened in setting up the request
+        console.error('Error message:', error.message);
+      }
     });
   }
 

@@ -11,8 +11,16 @@ import {
 import { useChat } from "ai/react";
 import NavbarHorizontal from "../../../components/NavbarHorizontal";
 import Link from "@mui/material/Link";
+import { useRouter } from "next/navigation";
 
 export default function Chatbot() {
+  const [questions, setQuestions] = useState([
+    "name","gender", "age", "facial features", "height", "eye color", "hair length", "hair style", "hair color", "skin tone", "personality traits", "goals", "strengths", "weaknesses"
+  ])
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const [isCollectingAnswers, setIsCollectingAnswers] = useState(true);
+
   function Copyright(props) {
     return (
       <Typography
@@ -29,10 +37,52 @@ export default function Chatbot() {
       </Typography>
     );
   }
+  
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     api: "https://flask-api-for-leonsi.vercel.app/api/generate-character-description", // Add the api end-point here
     keepLastMessageOnError: true,
   });
+
+  const handleBotQuestions = () => {
+    const currentQuestion = questions[currentQuestionIndex];
+
+    // Update the answers with the user's response
+    setAnswers({
+      ...answers,
+      [currentQuestion]: input,
+    });
+
+    // Add the user's answer to the chat
+    messages.push({ role: "user", content: input });
+
+    // Check if all questions are answered
+    if (currentQuestionIndex < questions.length - 1) {
+      // Ask the next question
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      messages.push({
+        role: "assistant",
+        content: questions[currentQuestionIndex + 1],
+      });
+    } else {
+      // If all questions are answered, stop collecting answers
+      setIsCollectingAnswers(false);
+
+      // Call the API with the collected answers
+      handleSubmit();
+    }
+  };
+
+  const customHandleSubmit = (e) => {
+    e.preventDefault();
+
+    if (isCollectingAnswers) {
+      handleBotQuestions();
+    } else {
+      handleSubmit();
+    }
+
+    handleInputChange({ target: { value: '' } }); // Clear input after submission
+  };
 
   const messageEndRef = useRef(null);
   const buttonRef = useRef(null); // Ref for the button
@@ -50,6 +100,11 @@ export default function Chatbot() {
 
   useEffect(() => {
     scrollToBottom();
+    messages.push({
+      role: "assistant",
+      content: "name",
+    });
+    // setCurrentQuestionIndex(currentQuestionIndex + 1); 
   }, [messages]);
 
   return (
@@ -189,7 +244,7 @@ export default function Chatbot() {
                   <Button
                     ref={buttonRef} // Assign ref to the button
                     variant="contained"
-                    onClick={handleSubmit}
+                    onClick={customHandleSubmit}
                     sx={{
                       color: "white",
                       backgroundColor: "#116C93",

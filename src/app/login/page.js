@@ -12,6 +12,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import NavbarHorizontal from "/components/NavbarHorizontal";
 import Link from "@mui/material/Link";
+import axios from 'axios';
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -41,32 +42,31 @@ export default function Login() {
     logInUser(email, password);
   };
 
-  async function logInUser(enteredEmail, enteredPassword) {
+  function logInUser(enteredEmail, enteredPassword){
+    const dataToBeSent = {
+      name: enteredEmail,
+      password: enteredPassword,
+    };
     const endpointURL = "https://flask-api-for-leonsi.vercel.app/api/login";
 
-    try {
-      const response = await fetch(endpointURL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: enteredEmail,
-          password: enteredPassword,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        console.log(data);
-        router.push("/dashboard");
-      } else {
-        setError("Incorrect email or password. Please try again.");
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+    
+    axios.post(endpointURL, dataToBeSent, { headers })
+    .then(response => {
+      console.log('Response:', response.data.response);
+      if (response.data.response === "Incorrect Email or Password"){
+        setIsWrong(true);
+        setError("Incorrect Email or Password")
+        return;
+      } else if(response.data.response === "Login successful") {
+        router.push("/dashboard")
       }
-    } catch (error) {
-      setError("An error occurred. Please try again later.");
-    }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
   }
 
   return (
@@ -148,6 +148,7 @@ export default function Login() {
           <Button
             type="submit" // Use type="submit" for form submission
             variant="contained"
+            onClick={handleSubmit}
             sx={{
               backgroundColor: "#116C93",
               width: "100%", // Full width of the container

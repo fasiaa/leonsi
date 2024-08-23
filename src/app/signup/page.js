@@ -10,6 +10,7 @@ import {
 import { useState } from "react";
 import NavbarHorizontal from "/components/NavbarHorizontal";
 import Link from "@mui/material/Link";
+import axios from 'axios';
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
@@ -40,14 +41,35 @@ export default function SignUp() {
     }
 
     // Add your sign-up logic here
-    // Example:
-    // try {
-    //   await signUpWithEmailAndPassword(auth, email, password);
-    //   // Redirect after successful signup
-    // } catch (error) {
-    //   setError("Error signing up. Please try again.");
-    // }
+    SignUpUser(email, password);
   };
+
+  function SignUpUser(enteredEmail, enteredPassword){
+    const dataToBeSent = {
+      name: enteredEmail,
+      password: enteredPassword,
+    };
+    const endpointURL = "https://flask-api-for-leonsi.vercel.app/api/signup";
+
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+    
+    axios.post(endpointURL, dataToBeSent, { headers })
+    .then(response => {
+      console.log('Response:', response.data.response);
+      if (response.data.response === "Failed to sign up"){
+        setIsWrong(true);
+        setError("Failed to sign up");
+        return;
+      } else if(response.data.response === "Sign in successful") {
+        router.push("/login")
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  }
 
   return (
     <Box width="100%" color="white">

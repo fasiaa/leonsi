@@ -30,7 +30,8 @@ export default function Chatbot() {
     );
   }
   const { messages, input, handleInputChange, handleSubmit } = useChat({
-    api: "", // Add the api end-point here
+    api: "https://flask-api-for-leonsi.vercel.app/api/generate-character-description", // Add the api end-point here
+    keepLastMessageOnError: true,
   });
 
   const messageEndRef = useRef(null);

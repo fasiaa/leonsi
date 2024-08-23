@@ -18,8 +18,10 @@
     "@nanostores/react": "github:ai/react",
     "ai": "^3.3.12",
     "axios": "^1.7.4",
+    "chart.js": "^4.4.4",
     "next": "14.2.5",
     "react": "^18",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18"
   },
   "devDependencies": {

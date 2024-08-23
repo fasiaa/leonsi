@@ -13,10 +13,10 @@ function PackageCard(props) {
       variant="outlined"
       sx={{
         width: { xs: "100%", sm: "350px" }, // Full width on small screens, 350px on larger screens
-        backgroundColor: "#181932", // Background color
-        borderRadius: "5px", // Border radius
-        boxShadow: "0 0 2px 0 #A4AECA, 0 0 5px 2px rgba(164, 174, 202, 0.01)", // Box shadow
-        border: "1px solid #1C6090", // Border color
+        backgroundColor: "#181932",
+        borderRadius: "5px",
+        boxShadow: "0 0 2px 0 #A4AECA, 0 0 5px 2px rgba(164, 174, 202, 0.01)",
+        border: "1px solid #1C6090",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
@@ -35,11 +35,19 @@ function PackageCard(props) {
           justifyContent: "space-between", // Evenly distribute the content
         }}
       >
-        <Typography fontSize={25}>{props.title}</Typography>
-        <Typography fontSize={18} fontWeight="bold" textAlign="center">
+        <Typography sx={{ fontSize: { xs: 15, sm: 25 } }}>
+          {props.title}
+        </Typography>
+        <Typography
+          sx={{ fontSize: { xs: 15, sm: 18 } }}
+          fontWeight="bold"
+          textAlign="center"
+        >
           ${props.price}/month
         </Typography>
-        <Typography>{props.description}</Typography>
+        <Typography sx={{ fontSize: { xs: 14, sm: 18 } }}>
+          {props.description}
+        </Typography>
       </CardContent>
       <CardActions
         sx={{
@@ -50,6 +58,7 @@ function PackageCard(props) {
           variant="contained"
           sx={{
             backgroundColor: "#116C93",
+            fontSize: { xs: 13 },
             "&:hover": {
               backgroundColor: "#0E577B", // Optional: darken on hover
             },

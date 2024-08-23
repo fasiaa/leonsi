@@ -10,8 +10,25 @@ import {
 } from "@mui/material";
 import { useChat } from "ai/react";
 import NavbarHorizontal from "../../../components/NavbarHorizontal";
+import Link from "@mui/material/Link";
 
 export default function Chatbot() {
+  function Copyright(props) {
+    return (
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        align="center"
+        {...props}
+      >
+        {"Copyright © "}
+        <Link color="inherit" href="/">
+          Leonsi
+        </Link>{" "}
+        {new Date().getFullYear()}
+      </Typography>
+    );
+  }
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     api: "", // Add the api end-point here
   });
@@ -226,6 +243,7 @@ export default function Chatbot() {
           />
         </Box>
       </Box>
+      <Copyright sx={{ color: "white" }} />
     </Box>
   );
 }

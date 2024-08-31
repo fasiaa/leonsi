@@ -1,5 +1,5 @@
 "use client";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import NavbarVertical from "../../../components/NavbarVertical";
 import Statistics from "../../../components/Statistics"; // Adjust the import path as needed
 import Link from "@mui/material/Link";
@@ -141,6 +141,21 @@ export default function Dashboard() {
             options={lineOptions}
           />
         </Box>
+
+        <Button
+              variant="contained"
+              href="/create-character"
+              sx={{
+                backgroundColor: "#116C93",
+                fontSize: { xs: 13 },
+                mt: "12px",
+                "&:hover": {
+                  backgroundColor: "#0E577B", // Optional: darken on hover
+                },
+              }}
+            >
+              Create Character
+            </Button>
       </Box>
 
       <Copyright sx={{ color: "white", mt: 5 }} />

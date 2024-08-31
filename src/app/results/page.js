@@ -13,13 +13,14 @@ import NavbarHorizontal from "../../../components/NavbarHorizontal";
 import Link from "@mui/material/Link";
 import { useRouter } from "next/navigation";
 import axios from 'axios';
+import ReactMarkdown from 'react-markdown';
 
-export default function results(){
+export default function results(response){
     const router = useRouter();
-    const {response, message} = useState(router.query);
+    const [message, setMessage] = useState(response.searchParams.response);
 
     const handleSubmit = () => {
-        router.push("/chatbot");
+        router.push("/chatbot?response=" + message);
     }
 
     return (
@@ -57,8 +58,8 @@ export default function results(){
                         textAlign="center"
                         color="white"
                         >
-                            {message}
-                        </Typography>
+                            <ReactMarkdown>{message}</ReactMarkdown>
+                            </Typography>
                         <Button
                         type="submit" // Use type="submit" for form submission
                         variant="contained"

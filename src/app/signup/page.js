@@ -63,7 +63,7 @@ export default function SignUp() {
         setError("Failed to sign up");
         return;
       } else if(response.data.response === "Sign in successful") {
-        router.push("/dashboard")
+        router.push("/login")
       }
     })
     .catch(error => {
@@ -73,7 +73,7 @@ export default function SignUp() {
 
   return (
     <Box width="100%" color="white">
-      <NavbarHorizontal />
+      {/* <NavbarHorizontal /> */}
       <Box
         display="flex"
         alignItems="center"

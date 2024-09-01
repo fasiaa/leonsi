@@ -14,6 +14,7 @@ import {
   LineElement,
   PointElement,
 } from "chart.js";
+import { useEffect } from "react";
 
 // Register required components
 ChartJS.register(
@@ -26,8 +27,10 @@ ChartJS.register(
   LineElement,
   PointElement
 );
+import { useRouter } from "next/navigation";
 
 export default function Dashboard() {
+  const router = useRouter()
   function Copyright(props) {
     return (
       <Typography
@@ -104,6 +107,18 @@ export default function Dashboard() {
       },
     },
   };
+
+  useEffect(() => {
+    try {
+      const response = localStorage.getItem("email")
+
+      if(!response){
+        router.push("/login")
+      }
+    }catch{
+      router.push("/login")
+    }
+  }, [])
 
   return (
     <Box bgcolor="#0C0D1A" color="white" minHeight="100vh">

@@ -122,7 +122,7 @@ export default function CreateCharacter(){
                             color: "#D5D5D5",
                             },
                         }}
-                        placeholder="name" fullWidth
+                        placeholder="Enter the character's name" fullWidth
                         value={name} // Bind the input to email state
                         onChange={(e) => setName(e.target.value)} // Update email state
                         />
@@ -136,7 +136,7 @@ export default function CreateCharacter(){
                             color: "#D5D5D5",
                             },
                         }}
-                        placeholder="gender" fullWidth
+                        placeholder="Enter the character's gender" fullWidth
                         value={gender} // Bind the input to email state
                         onChange={(e) => setGender(e.target.value)} // Update email state
                         />
@@ -150,7 +150,7 @@ export default function CreateCharacter(){
                             color: "#D5D5D5",
                             },
                         }}
-                        placeholder="age" fullWidth
+                        placeholder="Enter the character's age" fullWidth
                         value={age} // Bind the input to email state
                         onChange={(e) => setAge(e.target.value)} // Update email state
                         />
@@ -164,7 +164,7 @@ export default function CreateCharacter(){
                             color: "#D5D5D5",
                             },
                         }}
-                        placeholder="height" fullWidth
+                        placeholder="Enter the character's height" fullWidth
                         value={height} // Bind the input to email state
                         onChange={(e) => setHeight(e.target.value)} // Update email state
                         />
@@ -178,7 +178,7 @@ export default function CreateCharacter(){
                             color: "#D5D5D5",
                             },
                         }}
-                        placeholder="eyeColor" fullWidth
+                        placeholder="Enter the character's eye color" fullWidth
                         value={eyeColor} // Bind the input to email state
                         onChange={(e) => setEyeColor(e.target.value)} // Update email state
                         />
@@ -192,7 +192,7 @@ export default function CreateCharacter(){
                             color: "#D5D5D5",
                             },
                         }}
-                        placeholder="hairLength" fullWidth
+                        placeholder="Enter the character's hair length" fullWidth
                         value={hairLength} // Bind the input to email state
                         onChange={(e) => setHairLength(e.target.value)} // Update email state
                         />
@@ -206,7 +206,7 @@ export default function CreateCharacter(){
                             color: "#D5D5D5",
                             },
                         }}
-                        placeholder="hairStyle" fullWidth
+                        placeholder="Enter the character's hair style" fullWidth
                         value={hairStyle} // Bind the input to email state
                         onChange={(e) => setHairStyle(e.target.value)} // Update email state
                         />
@@ -220,7 +220,7 @@ export default function CreateCharacter(){
                             color: "#D5D5D5",
                             },
                         }}
-                        placeholder="hairColor" fullWidth
+                        placeholder="Enter the character's hair color" fullWidth
                         value={hairColor} // Bind the input to email state
                         onChange={(e) => setHairColor(e.target.value)} // Update email state
                         />
@@ -234,7 +234,7 @@ export default function CreateCharacter(){
                             color: "#D5D5D5",
                             },
                         }}
-                        placeholder="skinTone" fullWidth
+                        placeholder="Enter the character's skin tone" fullWidth
                         value={skinTone} // Bind the input to email state
                         onChange={(e) => setSkinTone(e.target.value)} // Update email state
                         />
@@ -248,7 +248,7 @@ export default function CreateCharacter(){
                             color: "#D5D5D5",
                             },
                         }}
-                        placeholder="facialFeatures" fullWidth
+                        placeholder="Enter the character's facial features" fullWidth
                         value={facialFeatures} // Bind the input to email state
                         onChange={(e) => setFacialFeatures(e.target.value)} // Update email state
                         />
@@ -262,7 +262,7 @@ export default function CreateCharacter(){
                             color: "#D5D5D5",
                             },
                         }}
-                        placeholder="personalityTraits" fullWidth
+                        placeholder="Enter the character's personality traits" fullWidth
                         value={personalityTraits} // Bind the input to email state
                         onChange={(e) => setPersonalityTraits(e.target.value)} // Update email state
                         />
@@ -276,7 +276,7 @@ export default function CreateCharacter(){
                             color: "#D5D5D5",
                             },
                         }}
-                        placeholder="goals" fullWidth
+                        placeholder="Enter the character's goals" fullWidth
                         value={goals} // Bind the input to email state
                         onChange={(e) => setGoals(e.target.value)} // Update email state
                         />
@@ -290,7 +290,7 @@ export default function CreateCharacter(){
                             color: "#D5D5D5",
                             },
                         }}
-                        placeholder="strengths" fullWidth
+                        placeholder="Enter the character's strengths" fullWidth
                         value={strengths} // Bind the input to email state
                         onChange={(e) => setStrengths(e.target.value)} // Update email state
                         />
@@ -304,7 +304,7 @@ export default function CreateCharacter(){
                             color: "#D5D5D5",
                             },
                         }}
-                        placeholder="weaknesses" fullWidth
+                        placeholder="Enter the character's weaknesses" fullWidth
                         value={weaknesses} // Bind the input to email state
                         onChange={(e) => setWeaknesses(e.target.value)} // Update email state
                         />

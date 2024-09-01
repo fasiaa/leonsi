@@ -32,12 +32,13 @@ export default function CreateCharacter(){
     const [response, setResponse] = useState("");
     const router = useRouter();     
 
-    const displayResults = () => {
-        router.push('/results', {query: response});
+    const displayResults = (r) => {
+        console.log(response)
+        router.push('/results/'+"?response=" + r);
     }
 
     const handleSubmit = (event) => {
-        const data = {character: {
+        const data_to_send = {character: {
             name: name,
             gender: gender,
             age: age,
@@ -61,17 +62,17 @@ export default function CreateCharacter(){
             'Content-Type': 'application/json',
         };
             
-        axios.post(url, data, { headers }).then(response => {
-          console.log('Response:', response.data);
-          setResponse(response.data);
-          displayResults();
+        axios.post(url, data_to_send, { headers }).then(response => {
+          console.log('Response:', response.data.response);
+          setResponse(response.data.response);
+          displayResults(response.data.response);
         }).catch(error => {
           if (error.response) {
             console.error('Error response:', error);
           }
         });
-    }
-        
+    } 
+         
     return (
         <Box>
             <NavbarHorizontal></NavbarHorizontal>

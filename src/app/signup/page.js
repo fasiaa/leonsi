@@ -46,7 +46,7 @@ export default function SignUp() {
 
   function SignUpUser(enteredEmail, enteredPassword){
     const dataToBeSent = {
-      name: enteredEmail,
+      email: enteredEmail,
       password: enteredPassword,
     };
     const endpointURL = "https://flask-api-for-leonsi.vercel.app/api/signup";
@@ -63,7 +63,7 @@ export default function SignUp() {
         setError("Failed to sign up");
         return;
       } else if(response.data.response === "Sign in successful") {
-        router.push("/login")
+        router.push("/dashboard")
       }
     })
     .catch(error => {

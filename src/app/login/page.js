@@ -44,7 +44,7 @@ export default function Login() {
 
   function logInUser(enteredEmail, enteredPassword){
     const dataToBeSent = {
-      name: enteredEmail,
+      email: enteredEmail,
       password: enteredPassword,
     };
     const endpointURL = "https://flask-api-for-leonsi.vercel.app/api/login";

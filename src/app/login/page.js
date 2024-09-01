@@ -8,7 +8,7 @@ import {
   Button,
   Alert,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import NavbarHorizontal from "/components/NavbarHorizontal";
 import Link from "@mui/material/Link";
@@ -61,28 +61,43 @@ export default function Login() {
         setError("Incorrect Email or Password")
         return;
       } else if(response.data.response === "Login successful") {
+
+        localStorage.setItem("email", enteredEmail);
         router.push("/dashboard")
       }
     })
     .catch(error => {
-      if (error.response) {
-        // The server responded with a status other than 2xx
-        console.error('Error response:', error.response.data);
-        console.error('Status:', error.response.status);
-        console.error('Headers:', error.response.headers);
-      } else if (error.request) {
-        // The request was made but no response was received
-        console.error('Error request:', error.request);
-      } else {
-        // Something else happened in setting up the request
-        console.error('Error message:', error.message);
-      }
+      console.log(error)
     });
   }
 
+  async function checkIfLoggedIn() {
+    // const url = "https://flask-api-for-leonsi.vercel.app/api/login";
+
+    // axios.get(url).then(res => {
+    //   if (res.data.response === "Already logged in") {
+    //     router.push("/dashboard");
+    //   }
+    // }).catch(error => {
+    //   console.error(error);
+    // });
+
+    try{
+      const response = localStorage.getItem("email")
+      if(response){
+        router.push("/dashboard");
+      }
+    }catch(error){
+    }
+  }
+
+  useEffect(() => {
+    checkIfLoggedIn();
+  }, [])
+
   return (
     <Box width="100%" color="white">
-      <NavbarHorizontal />
+      {/* <NavbarHorizontal /> */}
       <Box
         display="flex"
         alignItems="center"

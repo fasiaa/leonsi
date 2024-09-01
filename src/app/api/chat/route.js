@@ -12,8 +12,10 @@ export async function POST(req){
         'Content-Type': 'application/json',
     };
 
-    const listOfMessages = data.messages
-    const lastMessage = listOfMessages[listOfMessages.length - 1].content
+    // const listOfMessages = data.messages
+    // const lastMessage = listOfMessages[listOfMessages.length - 1].content
+
+    const lastMessage = data.message
 
     const dataToBeSent = {
         prompt: lastMessage
@@ -25,6 +27,12 @@ export async function POST(req){
         console.error(error);
     });
 
-    return new NextResponse(results)
+    console.log(results)
 
+    return NextResponse.json({
+        message: {
+          content: results,
+          role: 'assistant'
+        }
+      }, { status: 200 });
 }

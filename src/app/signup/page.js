@@ -73,7 +73,7 @@ export default function SignUp() {
 
   return (
     <Box width="100%" color="white">
-      <NavbarHorizontal />
+      {/* <NavbarHorizontal /> */}
       <Box
         display="flex"
         alignItems="center"

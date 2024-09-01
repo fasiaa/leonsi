@@ -26,6 +26,10 @@ function NavbarVertical() {
     setDrawerOpen(!drawerOpen);
   };
 
+  const handleLogOut = () => {
+    localStorage.clear();
+  }
+
   const handleDialogOpen = () => {
     setDialogOpen(true);
   };
@@ -132,7 +136,7 @@ function NavbarVertical() {
           <ListItem
             button
             component="a"
-            href="/chatbot"
+            href="/create-character"
             sx={{
               "&:hover": {
                 backgroundColor: "#116C93",
@@ -146,6 +150,7 @@ function NavbarVertical() {
             button
             component="a"
             href="/"
+            onClick={handleLogOut}
             sx={{
               "&:hover": {
                 backgroundColor: "#116C93",

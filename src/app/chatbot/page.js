@@ -12,6 +12,7 @@ import { useChat } from "ai/react";
 import NavbarHorizontal from "../../../components/NavbarHorizontal";
 import Link from "@mui/material/Link";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function Chatbot() {
   function Copyright(props) {
@@ -30,13 +31,13 @@ export default function Chatbot() {
       </Typography>
     );
   }
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
-    api: "/api/chat", // Add the api end-point here
-    keepLastMessageOnError: true,
-  });
-
+  const [messages, setMessages] = useState([{
+    role: "assistant",
+    content: "Hi how are you,"
+  }]);
+  const [input, setInput] = useState("");
   const messageEndRef = useRef(null);
-  const buttonRef = useRef(null); // Ref for the button
+  const buttonRef = useRef(null);
 
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -44,9 +45,23 @@ export default function Chatbot() {
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter" && !event.shiftKey) {
-      event.preventDefault(); // Prevent the default behavior (e.g., adding a new line)
-      buttonRef.current?.click(); // Simulate button click
+      event.preventDefault();
+      buttonRef.current?.click();
     }
+  };
+
+  const handleSubmit = async () => {
+    if (input.trim() !== "") {
+      setMessages((prevMessages) => [...prevMessages, {role: "user", content: input}]);
+      const response = await axios.post("/api/chat", { message: input });
+      setMessages((prevMessages) => [...prevMessages, {role: "assistant", content: response.data.message.content}]);
+      setInput("");
+      console.log(messages)
+    }
+  };
+
+  const handleInputChange = (event) => {
+    setInput(event.target.value);
   };
 
   useEffect(() => {
@@ -85,85 +100,80 @@ export default function Chatbot() {
           {messages.length !== 0 ? (
             <Box className="pb-4 pt-2 space-y-5">
               {messages.map((message) => (
-                <Box
-                  key={message.id}
-                  className="w-full"
-                  sx={{
-                    display: "flex",
-                    justifyContent:
-                      message.role === "user" ? "flex-end" : "flex-start",
-                  }}
-                >
-                  {message.role === "user" ? (
-                    <Box className="flex gap-x-2">
-                      <Typography
-                        className="rounded-lg p-3 w-full border-gray-500 border-2 text-sm"
-                        sx={{
-                          pt: 1,
-                          pb: 1,
-                          pl: 2,
-                          pr: 2,
-                          m: 1,
-                          backgroundColor: "#181932",
-                          borderRadius: "18px",
-                          color: "#D5D5D5",
-                          textAlign: "left",
-                          border: "1px solid #1C6090",
-                          backgroundColor: "#1F1F2E", // Background color for contrast
-                        }}
-                      >
-                        {message.content}
-                      </Typography>
-                      <Box className="bg-gray-500 h-10 w-10 rounded-lg">
-                        {/* User icon */}
-                      </Box>
-                    </Box>
-                  ) : (
-                    <Box className="flex gap-x-2">
-                      <Box className="bg-teal-500 h-10 w-10 rounded-lg">
-                        {/* Bot icon */}
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          className="w-full h-full text-white p-1"
-                        >
-                          <path d="M16.5 7.5h-9v9h9v-9z" />
-                          <path
-                            fillRule="evenodd"
-                            d="M8.25 2.25A.75.75 0 019 3v.75h2.25V3a.75.75 0 011.5 0v.75H15V3a.75.75 0 011.5 0v.75h.75a3 3 0 013 3v.75H21A.75.75 0 0121 9h-.75v2.25H21a.75.75 0 010 1.5h-.75V15H21a.75.75 0 010 1.5h-.75v.75a3 3 0 01-3 3h-.75V21a.75.75 0 01-1.5 0v-.75h-2.25V21a.75.75 0 01-1.5 0v-.75H9V21a.75.75 0 01-1.5 0v-.75h-.75a3 3 0 01-3-3v-.75H3A.75.75 0 013 15h.75v-2.25H3a.75.75 0 010-1.5h.75V9H3a.75.75 0 010-1.5h.75v-.75a3 3 0 013-3h.75V3a.75.75 0 01.75-.75zM6 6.75A.75.75 0 016.75 6h10.5a.75.75 0 01.75.75v10.5a.75.75 0 01-.75.75H6.75a.75.75 0 01-.75-.75V6.75z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </Box>
-                      <Typography
-                        className="rounded-lg p-3 w-full border-teal-500 border-2 text-sm"
-                        sx={{
-                          pt: 3,
-                          pb: 3,
-                          pl: 2,
-                          pr: 2,
-                          m: 1,
-                          backgroundColor: "#181932",
-                          borderRadius: "18px",
-                          color: "#D5D5D5",
-                          textAlign: "left",
-                          border: "1px solid #1C902F",
-                          backgroundColor: "#1F1F2E",
-                        }}
-                      >
-                            {/* Display the messages here */}
-                            {messages.map((message, index) => (
-                              <div key={index} className="message">
-                                {message.text}
-                              </div>
-                            ))}
-                        {message.content}
-                      </Typography>
-                    </Box>
-                  )}
-                </Box>
-              ))}
+  <Box
+    key={message.id}
+    className="w-full"
+    sx={{
+      display: "flex",
+      justifyContent:
+        message.role === "user" ? "flex-end" : "flex-start",
+    }}
+  >
+    {message.role === "user" ? (
+      <Box className="flex gap-x-2">
+        <Typography
+          className="rounded-lg p-3 w-full border-gray-500 border-2 text-sm"
+          sx={{
+            pt: 1,
+            pb: 1,
+            pl: 2,
+            pr: 2,
+            m: 1,
+            backgroundColor: "#181932",
+            borderRadius: "18px",
+            color: "#D5D5D5",
+            textAlign: "left",
+            border: "1px solid #1C6090",
+            backgroundColor: "#1F1F2E", // Background color for contrast
+          }}
+        >
+          {message.content}
+          {console.log(messages)}
+        </Typography>
+        <Box className="bg-gray-500 h-10 w-10 rounded-lg">
+          {/* User icon */}
+        </Box>
+      </Box>
+    ) : (
+      <Box className="flex gap-x-2" display={"flex"} alignItems={"center"}>
+        <Box className="bg-teal-500 h-10 w-10 rounded-lg" width={40} height={40}>
+          {/* Bot icon */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="w-full h-full text-white p-1"
+          >
+            <path d="M16.5 7.5h-9v9h9v-9z" />
+            <path
+              fillRule="evenodd"
+              d="M8.25 2.25A.75.75 0 019 3v.75h2.25V3a.75.75 0 011.5 0v.75H15V3a.75.75 0 011.5 0v.75h.75a3 3 0 013 3v.75H21A.75.75 0 0121 9h-.75v2.25H21a.75.75 0 010 1.5h-.75V15H21a.75.75 0 010 1.5h-.75v.75a3 3 0 01-3 3h-.75V21a.75.75 0 01-1.5 0v-.75h-2.25V21a.75.75 0 01-1.5 0v-.75H9V21a.75.75 0 01-1.5 0v-.75h-.75a3 3 0 01-3-3v-.75H3A.75.75 0 013 15h.75v-2.25H3a.75.75 0 010-1.5h.75V9H3a.75.75 0 010-1.5h.75v-.75a3 3 0 013-3h.75V3a.75.75 0 01.75-.75zM6 6.75A.75.75 0 016.75 6h10.5a.75.75 0 01.75.75v10.5a.75.75 0 01-.75.75H6.75a.75.75 0 01-.75-.75V6.75z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </Box>
+        <Typography
+          className="rounded-lg p-3 w-full border-teal-500 border-2 text-sm"
+          sx={{
+            pt: 3,
+            pb: 3,
+            pl: 2,
+            pr: 2,
+            m: 1,
+            backgroundColor: "#181932",
+            borderRadius: "18px",
+            color: "#D5D5D5",
+            textAlign: "left",
+            border: "1px solid #1C902F",
+            backgroundColor: "#1F1F2E",
+          }}
+        >
+          {message.content}
+        </Typography>
+      </Box>
+    )}
+  </Box>
+))}
             </Box>
           ) : (
             <Typography color="grey" align="center">

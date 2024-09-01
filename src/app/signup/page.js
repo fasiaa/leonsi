@@ -63,7 +63,7 @@ export default function SignUp() {
         setError("Failed to sign up");
         return;
       } else if(response.data.response === "Sign in successful") {
-        router.push("/dashboard")
+        router.push("/login")
       }
     })
     .catch(error => {

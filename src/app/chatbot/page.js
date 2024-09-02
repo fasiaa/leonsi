@@ -13,8 +13,9 @@ import NavbarHorizontal from "../../../components/NavbarHorizontal";
 import Link from "@mui/material/Link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import ReactMarkdown from 'react-markdown';
 
-export default function Chatbot() {
+export default function Chatbot(response) {
   function Copyright(props) {
     return (
       <Typography
@@ -33,7 +34,7 @@ export default function Chatbot() {
   }
   const [messages, setMessages] = useState([{
     role: "assistant",
-    content: "Hi how are you,"
+    content: response.searchParams.response
   }]);
   const [input, setInput] = useState("");
   const messageEndRef = useRef(null);
@@ -127,8 +128,7 @@ export default function Chatbot() {
             backgroundColor: "#1F1F2E", // Background color for contrast
           }}
         >
-          {message.content}
-          {console.log(messages)}
+          <ReactMarkdown>{message.content}</ReactMarkdown>
         </Typography>
         <Box className="bg-gray-500 h-10 w-10 rounded-lg">
           {/* User icon */}
@@ -168,7 +168,7 @@ export default function Chatbot() {
             backgroundColor: "#1F1F2E",
           }}
         >
-          {message.content}
+          <ReactMarkdown>{message.content}</ReactMarkdown>
         </Typography>
       </Box>
     )}

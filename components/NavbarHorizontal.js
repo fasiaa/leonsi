@@ -14,11 +14,32 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
+import { useRouter } from "next/navigation";
 
 function NavbarHorizontal() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const theme = useTheme();
+  const router = useRouter();
   const isSmallOrMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
+
+  const handleLogOut = () => {
+    localStorage.clear();
+    router.push("/");
+  }
+
+  const isLoggedin = () => {
+    try {
+      const response = localStorage.getItem("email");
+
+      if(response){
+        return true;
+      } else {
+        return false;
+      }
+    } catch(error){
+      return false;
+    }
+  }
 
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
@@ -92,36 +113,59 @@ function NavbarHorizontal() {
             >
               Dashboard
             </Button>
-            <Button
-              component="a"
-              href="/signup"
-              sx={{
-                color: "white",
-                textTransform: "none",
-                "&:hover": {
-                  backgroundColor: "#116C93",
-                  color: "white",
-                  borderRadius: "4px",
-                },
-              }}
-            >
-              Sign Up
-            </Button>
-            <Button
-              component="a"
-              href="/login"
-              sx={{
-                color: "white",
-                textTransform: "none",
-                "&:hover": {
-                  backgroundColor: "#116C93",
-                  color: "white",
-                  borderRadius: "4px",
-                },
-              }}
-            >
-              Login
-            </Button>
+            {!isLoggedin() && (
+              <>
+                <Button
+                  component="a"
+                  href="/signup"
+                  sx={{
+                    color: "white",
+                    textTransform: "none",
+                    "&:hover": {
+                      backgroundColor: "#116C93",
+                      color: "white",
+                      borderRadius: "4px",
+                    },
+                  }}
+                >
+                  Sign Up
+                </Button>
+                <Button
+                  component="a"
+                  href="/login"
+                  sx={{
+                    color: "white",
+                    textTransform: "none",
+                    "&:hover": {
+                      backgroundColor: "#116C93",
+                      color: "white",
+                      borderRadius: "4px",
+                    },
+                  }}
+                >
+                  Login
+                </Button>
+              </>
+            )}  
+            {isLoggedin() && (
+              <>
+              <Button
+                  component="a"
+                  onClick={handleLogOut}
+                  sx={{
+                    color: "white",
+                    textTransform: "none",
+                    "&:hover": {
+                      backgroundColor: "#116C93",
+                      color: "white",
+                      borderRadius: "4px",
+                    },
+                  }}
+                >
+                  Logout
+                </Button>
+              </>
+            )}
           </Box>
         </Box>
       )}

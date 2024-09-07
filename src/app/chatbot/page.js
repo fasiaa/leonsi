@@ -51,14 +51,10 @@ export default function Chatbot(response) {
     }
   };
 
-  const getResponse = async() => {
-    return axios.post("/api/chat", { message: input });
-  }
-
   const handleSubmit = async () => {
     if (input.trim() !== "") {
       setMessages((prevMessages) => [...prevMessages, {role: "user", content: input}]);
-      const response = await getResponse();
+      const response = await axios.post("/api/chat", { message: input });
       setMessages((prevMessages) => [...prevMessages, {role: "assistant", content: response.data.message.content}]);
       setInput("");
       console.log(messages)

@@ -27,7 +27,7 @@ function NavbarHorizontal() {
     router.push("/");
   }
 
-  const isLoggedin = async() => {
+  const isLoggedin = () => {
     try {
       const response = localStorage.getItem("email");
 
@@ -113,7 +113,7 @@ function NavbarHorizontal() {
             >
               Dashboard
             </Button>
-            {!isLoggedin() ? (
+            {!isLoggedin() && (
               <>
                 <Button
                   component="a"
@@ -146,7 +146,8 @@ function NavbarHorizontal() {
                   Login
                 </Button>
               </>
-            ) : (
+            )}  
+            {isLoggedin() && (
               <>
               <Button
                   component="a"

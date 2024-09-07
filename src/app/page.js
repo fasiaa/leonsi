@@ -4,6 +4,9 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"; // Im
 import NavbarHorizontal from "../../components/NavbarHorizontal";
 import PackageCard from "../../components/PackageCard";
 import Link from "@mui/material/Link";
+import { analytics } from "../../firebase";
+import { useEffect } from "react";
+import { logEvent } from "firebase/analytics";
 
 export default function Home() {
   function Copyright(props) {
@@ -22,6 +25,12 @@ export default function Home() {
       </Typography>
     );
   }
+
+  useEffect(()=>{
+    if (analytics) {
+      logEvent(analytics, 'page_view');
+    }
+  }, [])
   return (
     <Box width="100%" color="white">
       <NavbarHorizontal />
